@@ -93,6 +93,17 @@ export const setSearchResult = (data) => dispatch => {
     })
 }
 
+export const updateSearchResult = (result, data) => dispatch => {
+
+    const modify = result.filter(item => item._id !== data._id);
+    const newResult = [...modify, {...data}];
+
+    dispatch({
+        type: "SEARCH_RESULT",
+        payload: newResult
+    })
+}
+
 export const removeItemSearchResult = (data, rmv) => dispatch => {
     const newData = data.filter(item => item._id !== rmv._id);
     dispatch({
@@ -147,5 +158,19 @@ export const emptyAnnouncement = (data) => dispatch => {
     dispatch({
         type: "SET_ANN",
         payload: []
+    })
+}
+
+export const setFloor = (data) => dispatch => {
+    dispatch({
+        type: "SET_FLOOR",
+        payload: data
+    })
+}
+
+export const setRoom = (data) => dispatch => {
+    dispatch({
+        type: "SET_ROOM",
+        payload: data
     })
 }

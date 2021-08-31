@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import { toast } from 'react-toastify';
 
-import Calendar from 'react-calendar';
+import DateTimePicker from 'react-datetime-picker';
 
 
 import server from '../../../axiosConfig';
@@ -32,8 +32,8 @@ const CreateFormPatient = ({ hospital, setDetailHospital, departments }) => {
     const history = useHistory();
     const [errorObj, setErrorObj] = useState({});
     const [admitDate, setAdmitDate] = useState(new Date());
-    const [dischargeDate, setDischargeDate] = useState(new Date());
-    const [showdis, setShowdis] = useState(false);
+    // const [dischargeDate, setDischargeDate] = useState(new Date());
+    // const [showdis, setShowdis] = useState(false);
 
     const [name, setName] = useState({
         firstName: "",
@@ -43,19 +43,13 @@ const CreateFormPatient = ({ hospital, setDetailHospital, departments }) => {
 
     const [detail, setDetail] = useState({
         department: departments[0] ? departments[0].name : "no department created",
-        email: "",
         diagnosis: ""
     })
 
-    const [admitted, setAdmitted] = useState({
-        hour: 0,
-        minute: 0,
-    });
-
-    const [discharged, setDischarged] = useState({
-        hour: 0,
-        minute: 0,
-    });
+    const [contact, setContact] = useState({
+        email: "",
+        phone: ""
+    })
 
 
     const nameOnChange = (e, type) => {
@@ -86,10 +80,6 @@ const CreateFormPatient = ({ hospital, setDetailHospital, departments }) => {
                 ...detail,
                 department: value
             }); break;
-            case "email": setDetail({
-                ...detail,
-                email: value
-            }); break;
             case "diagnosis": setDetail({
                 ...detail,
                 diagnosis: value
@@ -98,107 +88,36 @@ const CreateFormPatient = ({ hospital, setDetailHospital, departments }) => {
         }
     }
 
-    const admittedOnChange = (e, type) => {
+    const contactOnChange = (e, type) => {
         const value = e.target.value;
-
-        const hourCheck = (val) => {
-            if (String(val).length > 2) {
-                return;
-            }
-
-            if (val <= 23) {
-                setAdmitted({
-                    ...admitted,
-                    hour: val
-                })
-            } else return;
-        }
-
-        const minuteCheck = (val) => {
-            if (String(val).length > 2) {
-                return;
-            }
-
-            if (val <= 59) {
-                setAdmitted({
-                    ...admitted,
-                    minute: val
-                })
-            } else return;
-        }
-
         switch (type) {
-            case "hour": hourCheck(value); break;
-            case "minute": minuteCheck(value); break;
+            case "email": setContact({
+                ...contact,
+                email: value
+            }); break;
+            case "phone": setContact({
+                ...contact,
+                phone: value
+            }); break;
             default: return;
         }
     }
-
-    const dischargeOnChange = (e, type) => {
-        const value = e.target.value;
-
-        const hourCheck = (val) => {
-            if (String(val).length > 2) {
-                return;
-            }
-
-            if (val <= 23) {
-                setDischarged({
-                    ...discharged,
-                    hour: val
-                })
-            } else return;
-        }
-
-        const minuteCheck = (val) => {
-            if (String(val).length > 2) {
-                return;
-            }
-
-            if (val <= 59) {
-                setDischarged({
-                    ...discharged,
-                    minute: val
-                })
-            } else return;
-        }
-
-        switch (type) {
-            case "hour": hourCheck(value); break;
-            case "minute": minuteCheck(value); break;
-            default: return;
-        }
-    }
+    
 
     const submitHandler = (e) => {
         e.preventDefault()
-        let dischargeConfig
-        if (showdis === false) {
-            dischargeConfig = {}
-        } else {
-            dischargeConfig = {
-                day: dischargeDate.getDate(),
-                month: dischargeDate.getMonth(),
-                year: dischargeDate.getFullYear(),
-                hour: discharged.hour,
-                minute: discharged.minute
-            }
-        }
+        console.log(detail.department);
+       
         const isValidated = patientCreateValidator({
             firstName: name.firstName,
             middleName: name.middleName,
             lastName: name.lastName,
             department: detail.department,
             diagnosis: detail.diagnosis,
-            email: detail.email,
-            admitted: {
-                day: admitDate.getDate(),
-                month: admitDate.getMonth(),
-                year: admitDate.getFullYear(),
-                hour: admitted.hour,
-                minute: admitted.minute
-            },
-            discharged: dischargeConfig
+            email: contact.email,
+            phone: contact.phone,
+            admitted: admitDate,
+            // discharged: dischargeDate
         })
 
         if (isValidated.error) {
@@ -214,17 +133,14 @@ const CreateFormPatient = ({ hospital, setDetailHospital, departments }) => {
                 lastName: name.lastName,
                 department: detail.department,
                 diagnosis: detail.diagnosis,
-                admitted: {
-                    day: admitDate.getDate(),
-                    month: admitDate.getMonth(),
-                    year: admitDate.getFullYear(),
-                    hour: admitted.hour,
-                    minute: admitted.minute
-                },
-                discharged: dischargeConfig
+                email: contact.email,
+                phone: contact.phone,
+                admitted: admitDate,
+                // discharged: dischargeDate
             }
         }).then(response => {
             console.log(response.data);
+            toast.success("patient created successfully");
             history.push(`/hospital/${hospital.name}/dashboard/patient/find`);
         }).catch(error => {
             if (error.response) {
@@ -267,23 +183,18 @@ const CreateFormPatient = ({ hospital, setDetailHospital, departments }) => {
                 </div>
                 <div className="patient-form-detail-container">
                     <div className="patient-form-detail-item">
-                        {particularTypeError(errorObj, "email")}
-                        <label>email: </label>
-                        <input
-                            onChange={e => detailOnChange(e, "email")}
-                            value={detail.email}
-                            type="email"></input>
-                    </div>
-                    <div className="patient-form-detail-item">
                         {particularTypeError(errorObj, "department")}
                         <label>department: </label>
                         <select
                             onChange={e => detailOnChange(e, "department")}
                             name="department" id="department">
                             {
+                                departments.length >= 1 ? 
                                 departments.map(value => {
                                     return <option key={value._id} value={value.name}>{value.name}</option>
                                 })
+                                :
+                                <option value="">no department created</option>
                             }
                         </select>
                     </div>
@@ -295,71 +206,42 @@ const CreateFormPatient = ({ hospital, setDetailHospital, departments }) => {
                             value={detail.diagnosis}
                             type="textarea"></input>
                     </div>
-
+                </div>
+                <div className="patient-form-contact-container">
+                    <div className="patient-form-detail-item">
+                        {particularTypeError(errorObj, "email")}
+                        <label>email: </label>
+                        <input
+                            onChange={e => contactOnChange(e, "email")}
+                            value={contact.email}
+                            type="email"></input>
+                    </div>
+                    <div className="patient-form-detail-item">
+                        {particularTypeError(errorObj, "phone")}
+                        <label>phone: </label>
+                        <input
+                            onChange={e => contactOnChange(e, "phone")}
+                            value={contact.phone}
+                            type="number"></input>
+                    </div>
                 </div>
                 <div className="patient-date-container">
                     <div className="patient-admission-container">
                         <div className="main-heading">Admission</div>
-                        <div className="patient-admission-date-container">
-                            <div className="patient-form-date-item">
-                                {particularTypeError(errorObj, "day")}
-                                <label>day: </label>
-                                <input value={admitDate.getDate()} disabled type="number" min="1" max="31"></input>
-                            </div>
-                            <div className="patient-form-date-item">
-                                {particularTypeError(errorObj, "month")}
-                                <label>month: </label>
-                                <input value={admitDate.getMonth()} disabled type="number" min="1" max="12"></input>
-                            </div>
-                            <div className="patient-form-date-item">
-                                {particularTypeError(errorObj, "year")}
-                                <label>year: </label>
-                                <input value={admitDate.getFullYear()} disabled type="number" min="1950" max="2300"></input>
-                            </div>
-
-                        </div>
                         <div className="patient-admission-calendar-container">
                             <div className="calendar-container">
-                                <Calendar
+                                <DateTimePicker
                                     onChange={setAdmitDate}
                                     value={admitDate}
                                 />
                             </div>
                         </div>
-                        <div className="patient-admission-timing-container">
-                            <div className="heading">
-                                Timing
-                            </div>
-                            <div className="patient-admission-admitted-container">
-                                <div className="label">admitted</div>
-                                <div className="patient-admission-time-container">
-                                    <div className="patient-admission-time-item">
-                                        {particularTypeError(errorObj, "admitted")}
-                                        <label>hour: </label>
-                                        <input
-                                            onChange={(e) => admittedOnChange(e, "hour")}
-                                            value={admitted.hour}
-                                            type="number"
-                                            min="0"
-                                            max="23"></input>
-                                    </div>
-                                    <div className="patient-admission-time-item">
-                                        <label>minute: </label>
-                                        <input
-                                            onChange={e => admittedOnChange(e, "minute")}
-                                            value={admitted.minute}
-                                            type="number"
-                                            min="0"
-                                            max="59"></input>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
-                    <div>
+                    {/* </div> */}
+                    {/* <div>
                         <div className="patient-condition-container">
                             <p className="condition-label">
-                                    is discharged:  <spam className="condition-text">{JSON.stringify(showdis)}</spam>
+                                is discharged:  <p className="condition-text">{JSON.stringify(showdis)}</p>
                             </p>
                             <button onClick={(e) => {
                                 e.preventDefault();
@@ -373,72 +255,18 @@ const CreateFormPatient = ({ hospital, setDetailHospital, departments }) => {
                                     <div className="main-heading">
                                         Discharge
                                     </div>
-                                    <div className="patient-admission-date-container">
-                                        <div className="patient-form-date-item">
-                                            {particularTypeError(errorObj, "day")}
-                                            <label>day: </label>
-                                            <input
-                                                value={dischargeDate.getDate()}
-                                                disabled
-                                                type="number"
-                                                min="1"
-                                                max="31"></input>
-                                        </div>
-                                        <div className="patient-form-date-item">
-                                            {particularTypeError(errorObj, "month")}
-                                            <label>month: </label>
-                                            <input
-                                                value={dischargeDate.getMonth()}
-                                                disabled
-                                                type="number"
-                                                min="1"
-                                                max="12"></input>
-                                        </div>
-                                        <div className="patient-form-date-item">
-                                            {particularTypeError(errorObj, "year")}
-                                            <label>year: </label>
-                                            <input value={dischargeDate.getFullYear()} disabled type="number" min="1950" max="2300"></input>
-                                        </div>
-                                    </div>
                                     <div className="patient-admission-calendar-container">
                                         <div className="calendar-container">
-                                            <Calendar
+                                            <DateTimePicker
                                                 onChange={setDischargeDate}
                                                 value={dischargeDate}
                                             />
                                         </div>
                                     </div>
-                                    <div className="patient-admission-timing-container">
-                                        <div className="heading">
-                                            Timing
-                                        </div>
-                                        <div className="patient-admission-admitted-container">
-                                            <div className="label">
-                                                discharged
-                                            </div>
-                                            <div className="patient-admission-time-container">
-                                                <div className="patient-admission-time-item">
-                                                    <label>hour: </label>
-                                                    <input
-                                                        onChange={(e) => dischargeOnChange(e, "hour")}
-                                                        value={discharged.hour}
-                                                        type="number" min="0" max="23"></input>
-                                                </div>
-                                                <div className="patient-admission-time-item">
-                                                    {particularTypeError(errorObj, "discharged")}
-                                                    <label>minute: </label>
-                                                    <input
-                                                        onChange={(e) => dischargeOnChange(e, "minute")}
-                                                        value={discharged.minute}
-                                                        type="number" min="0" max="59"></input>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                                 : null
                         }
-                    </div>
+                    </div> */}
                 </div>
                 <div className="patient-form-btn-container">
                     <button
@@ -446,7 +274,7 @@ const CreateFormPatient = ({ hospital, setDetailHospital, departments }) => {
                     >Submit</button>
                 </div>
             </PatientForm>
-        </PatientFormContainer>
+        </PatientFormContainer >
     )
 }
 

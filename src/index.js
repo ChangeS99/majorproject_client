@@ -1,5 +1,7 @@
 import ReactDOM from 'react-dom';
 
+import Modal from 'react-modal';
+
 //style components
 import { ThemeProvider } from 'styled-components';
 
@@ -22,6 +24,8 @@ import {theme} from './style/theme';
 
 //create store
 const store = createStore(reducer, applyMiddleware(thunk));
+
+Modal.setAppElement('#root');
 
 ReactDOM.render(
     <Provider store={store}>

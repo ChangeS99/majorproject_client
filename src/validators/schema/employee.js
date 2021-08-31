@@ -47,18 +47,7 @@ export const employeeCreateSchema = Joi.object({
         .max(30)
         .required()
         .trim(),
-    day: Joi.number()
-        .min(1)
-        .max(31)
-        .required(),
-    month: Joi.number()
-        .min(1)
-        .max(12)
-        .required(),
-    year: Joi.number()
-        .min(1950)
-        .max(2300)
-        .required(),
+    joined: Joi.date().required(),
     arrival: timingNestedSchema,
     leaving: timingNestedSchema
 })

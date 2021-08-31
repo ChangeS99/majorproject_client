@@ -8,8 +8,12 @@ import server from '../../axiosConfig';
 //action
 import {
     activateHospitalData,
-    setHospital
+    setHospital,
 } from '../../actions/hospital/information';
+
+import {
+    resetMarker
+} from '../../actions/hospital/location';
 
 //validator
 import { hospitalConfigureValidator } from '../../validators/hospital';
@@ -18,7 +22,7 @@ import { InformationCont } from '../../style/hospital/hospital__styles';
 import { InformationForm } from '../../style/form';
 import { SubmitButton } from '../../style/button';
 
-const Information = ({ hospital, marker, emails, token, information, activateHospitalData, setHospital }) => {
+const Information = ({ hospital, marker, emails, token, information, activateHospitalData, setHospital, resetMarker }) => {
     const history = useHistory();
     // const [loading, setLoading] = useState(true);
     const [formData, setFormData] = useState({
@@ -53,6 +57,11 @@ const Information = ({ hospital, marker, emails, token, information, activateHos
         }).catch(error => {
             console.log(error);
         })
+
+        return () => {
+            resetMarker();
+        }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [marker])
 
@@ -272,5 +281,6 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
     activateHospitalData,
-    setHospital
+    setHospital,
+    resetMarker
 })(Information);

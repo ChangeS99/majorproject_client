@@ -2,7 +2,10 @@ export const theme = {
     background: {
         nav: "hsla(213, 100%, 81%, 1)",
         main: "hsla(213, 100%, 91%, 1)",
-        secondary: "hsla(209, 35%, 30%, 1)"
+        secondary: "hsla(209, 35%, 30%, 1)",
+        backdrop: {
+            transparent: "hsla(0, 0%, 0%, 0.4)"
+        }
     },
     link: {
         visited:"hsla(252, 53%, 42%, 1)",

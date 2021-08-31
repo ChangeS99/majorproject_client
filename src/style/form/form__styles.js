@@ -292,6 +292,53 @@ export const PatientForm = styled.form`
         }
     }
 
+    .patient-form-contact-container {
+        display: flex;
+        flex-direction: row;
+        /* justify-content: space-evenly; */
+        margin-top: 0.4rem;
+
+        .patient-form-detail-item {
+            display: flex;
+            flex-direction: column;
+            margin: 0.8rem 0.6rem;
+            position: relative;
+
+            label {
+                font-size: 0.88rem;
+            }
+
+            input {
+                margin-top: 0.4rem;
+
+                width: 16rem;
+                font-size: 0.9rem;
+                padding: 0.4rem;
+                border-radius: 0.3rem;   
+            }
+
+            select {
+                margin-top: 0.4rem;
+
+                width: 16rem;
+                font-size: 0.9rem;
+                padding: 0.4rem;
+                border-radius: 0.3rem;  
+            }
+
+            .error {
+                position: absolute;
+                padding: 0;
+                margin: 0;
+                top: -1.4rem;
+                font-size: 0.7rem;
+                color: red;
+            }
+        }
+    }
+
+
+
     .patient-date-container {
         display: flex;
         flex-direction: row;
@@ -309,6 +356,7 @@ export const PatientForm = styled.form`
                     font-weight: 300;
 
                     .condition-text {
+                        display: inline;
                         font-size: 1.4rem;
                         font-weight: 600;
                     }
@@ -357,7 +405,7 @@ export const PatientForm = styled.form`
                 .calendar-container {
                     margin-top: 0.2rem;
                     width: 18rem;
-                    height: 18rem;
+                    height: 5rem;
 
                     border-radius: 0.5rem;
 

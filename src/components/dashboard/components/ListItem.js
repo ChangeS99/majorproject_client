@@ -1,14 +1,41 @@
-// import { useState } from 'react';
+import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 
 import server from '../../../axiosConfig';
 
+//actions
 import { removeItemSearchResult, removeRole, removeDep } from '../../../actions/hospital/information';
+import { setBackdrop } from '../../../actions/ui/backdrop';
+
+//component
+import TransparentBlack from '../../backdrop/TransparentBlack';
 
 import { ListItemContainer } from '../../../style/list/list__styles';
 
-const ListItem = ({ roles, departments, forRole, forDep, data, dashmode, crudmode, result, removeItemSearchResult, removeDep, removeRole }) => {
+const ListItem = ({
+    roles,
+    departments,
+    forRole,
+    forDep,
+    data,
+    dashmode,
+    crudmode,
+    result,
+    removeItemSearchResult,
+    removeDep,
+    removeRole,
+    setBackdrop,
+    backdrop }) => {
+
+    useEffect(() => {
+        return () => {
+            setBackdrop(false, {
+                for: "none",
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     // const [deletebtnText, setDeleteBtnText] = useState("delete");
 
@@ -23,7 +50,7 @@ const ListItem = ({ roles, departments, forRole, forDep, data, dashmode, crudmod
     }
 
     const deleteHandler = () => {
-        
+
         server.delete(`/hospital/${dashmode}/delete`, {
             data: {
                 _id: data._id
@@ -32,10 +59,10 @@ const ListItem = ({ roles, departments, forRole, forDep, data, dashmode, crudmod
             .then(response => {
                 removeItemSearchResult(result, data);
                 toast.success(response.data.message);
-                
+
             })
             .catch(error => {
-                
+
                 if (error.response) {
                     toast.error(error.response.data.error)
                 } else {
@@ -46,7 +73,7 @@ const ListItem = ({ roles, departments, forRole, forDep, data, dashmode, crudmod
     }
 
     const aboutDeleteHandler = () => {
-        
+
 
         const conditionStr = forRole ? 'role' : 'department';
 
@@ -60,17 +87,17 @@ const ListItem = ({ roles, departments, forRole, forDep, data, dashmode, crudmod
                 if (response.data.isRole) {
                     removeRole(roles, response.data.roles);
                     toast.success(response.data.message);
-                    
+
                 }
                 if (response.data.isDep) {
                     removeDep(departments, response.data.departments);
                     toast.success(response.data.message);
-                  
+
                 }
 
             })
             .catch(error => {
-                
+
                 if (error.response) {
                     toast.error(error.response.data.error)
                 } else {
@@ -88,41 +115,61 @@ const ListItem = ({ roles, departments, forRole, forDep, data, dashmode, crudmod
     }
 
     const EmployeeItem = () => {
-        return <div>
-            <div>
-                <div>
-                    firstname: {data.firstName}
-                    middleName: {data.middleName}
-                    lastName: {data.lastName}
+        return <div 
+        className="item-container" 
+        onClick={() => {
+            setBackdrop(true, {
+                for: dashmode,
+                data
+            });
+        }}>
+            <div className="item-detail-container">
+                <div className="item-name-container">
+                    <div>firstname: {data.firstName}</div>
+                    <div>middleName: {data.middleName.length >= 1 ? data.middleName : " "}</div>
+                    <div>lastName: {data.lastName}</div>
                 </div>
-                <div>
+                <div className="item-id-container">
                     id: {data._id}
                 </div>
+                <div className="item-department-container">
+                    department: {data.department}
+                </div>
+                <div className="item-department-container">
+                    role: {data.role}
+                </div>
             </div>
-            <div>
-                <button onClick={deleteHandler}><i class="far fa-trash-alt"></i></button>
-            </div>
+            {/* <div className="item-btn-container">
+                <button onClick={deleteHandler}><i className="far fa-trash-alt"></i></button>
+            </div> */}
         </div>
     }
 
     const PatientItem = () => {
-        return <div>
-            <div>
-                <div>
-                    firstname: {data.firstName}
-                    middleName: {data.middleName}
-                    lastName: {data.lastName}
+        return <div
+            className="item-container"
+            onClick={() => {
+                setBackdrop(true, {
+                    for: dashmode,
+                    data
+                });
+            }}>
+            <div className="item-detail-container">
+                <div className="item-name-container">
+                    <div>firstname: {data.firstName}</div>
+                    <div>middleName: {data.middleName.length >= 1 ? data.middleName : " "}</div>
+                    <div>lastName: {data.lastName}</div>
                 </div>
-                <div>
+                <div className="item-id-container">
                     id: {data._id}
                 </div>
-                <div>
+                <div className="item-department-container">
                     department: {data.department}
                 </div>
             </div>
-            <div>
-                <button onClick={deleteHandler}><i class="far fa-trash-alt"></i></button>
-            </div>
+            {/* <div className="item-btn-container">
+                <button onClick={deleteHandler}><i className="far fa-trash-alt"></i></button>
+            </div> */}
         </div>
     }
 
@@ -133,7 +180,7 @@ const ListItem = ({ roles, departments, forRole, forDep, data, dashmode, crudmod
             </div>
             <div className="about-item-delete-btn-cont">
                 <button onClick={aboutDeleteHandler}>
-                    <i class="far fa-trash-alt"></i>
+                    <i className="far fa-trash-alt"></i>
                 </button>
             </div>
         </div>
@@ -141,6 +188,7 @@ const ListItem = ({ roles, departments, forRole, forDep, data, dashmode, crudmod
 
     return (
         <ListItemContainer>
+            <TransparentBlack backdrop={backdrop} />
             {
                 ConditionalRendering()
             }
@@ -151,11 +199,13 @@ const ListItem = ({ roles, departments, forRole, forDep, data, dashmode, crudmod
 const mapStateToProps = state => ({
     result: state.result,
     roles: state.roles,
-    departments: state.departments
+    departments: state.departments,
+    backdrop: state.backdrop
 })
 
 export default connect(mapStateToProps, {
     removeItemSearchResult,
     removeRole,
-    removeDep
+    removeDep,
+    setBackdrop
 })(ListItem);

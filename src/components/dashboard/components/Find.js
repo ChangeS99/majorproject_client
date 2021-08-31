@@ -33,9 +33,11 @@ const Find = ({ dashmode, crudmode, result, setSearchResult }) => {
             search
         })
             .then(response => {
+                setSearchResult(response.data);
                 console.log(response.data)
             })
             .catch(error => {
+                setSearchResult([]);
                 console.log(error);
                 // console.log(error.response.data.error);
             })

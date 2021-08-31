@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 
 import { toast } from 'react-toastify';
 
-import Calendar from 'react-calendar';
+// import Calendar from 'react-calendar';
+import DateTimePicker from 'react-datetime-picker';
 
 
 import server from '../../../axiosConfig';
@@ -29,7 +30,7 @@ import {
 const CreateFormEmployee = ({ hospital, setDetailHospital, departments, roles }) => {
     const history = useHistory();
     const [errorObj, setErrorObj] = useState({});
-    const [date, setDate] = useState(new Date());
+    const [joined, setJoined] = useState(new Date());
 
     const [name, setName] = useState({
         firstName: "",
@@ -174,9 +175,7 @@ const CreateFormEmployee = ({ hospital, setDetailHospital, departments, roles })
             email: detail.email,
             role: detail.role,
             department: detail.department,
-            day: date.getDate(),
-            month: date.getMonth(),
-            year: date.getFullYear(),
+            joined,
             arrival,
             leaving
         })
@@ -193,11 +192,7 @@ const CreateFormEmployee = ({ hospital, setDetailHospital, departments, roles })
                     email: detail.email,
                     role: detail.role,
                     department: detail.department,
-                    joined: {
-                        day: date.getDate(),
-                        month: date.getMonth(),
-                        year: date.getFullYear()
-                    },
+                    joined,
                     timing: {
                         arrival,
                         leaving
@@ -207,6 +202,7 @@ const CreateFormEmployee = ({ hospital, setDetailHospital, departments, roles })
                 .then(response => {
                     setDetailHospital()
                         .then(_ => {
+                            toast.success(response.data.message)
                             history.push(`/hospital/${hospital.name}/dashboard/employee`)
                         })
                         .catch(error => {
@@ -299,43 +295,11 @@ const CreateFormEmployee = ({ hospital, setDetailHospital, departments, roles })
                 <div className="timing-join-container">
                     <div className="timing-join-date-container">
                         Joined at:
-                        <div className="timing-join-day-container">
-                            <div className="timing-join-date-item">
-                                {particularTypeError(errorObj, "day")}
-                                <label>day: </label>
-                                <input
-                                    value={date.getDate()}
-                                    disabled
-                                    type="number"
-                                    min="1"
-                                    max="31"></input>
-                            </div>
-                            <div className="timing-join-date-item">
-                                {particularTypeError(errorObj, "month")}
-                                <label>month: </label>
-                                <input
-                                    value={date.getMonth()}
-                                    disabled
-                                    type="number"
-                                    min="1"
-                                    max="12"></input>
-                            </div>
-                            <div className="timing-join-date-item">
-                                {particularTypeError(errorObj, "year")}
-                                <label>year: </label>
-                                <input
-                                    value={date.getFullYear()}
-                                    disabled
-                                    type="number"
-                                    min="1950"
-                                    max="2300"></input>
-                            </div>
-                        </div>
                         <div className="timing-join-calendar-container">
                             <div className="calendar-container">
-                                <Calendar
-                                    onChange={setDate}
-                                    value={date}
+                                <DateTimePicker
+                                    onChange={setJoined}
+                                    value={joined}
                                 />
                             </div>
 

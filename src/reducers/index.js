@@ -10,8 +10,16 @@ import {
     SearchResultReducer,
     roleReducer,
     departmentReducer,
-    announcementReducer
+    announcementReducer,
+    floorReducer,
+    roomReducer
 } from './hospital';
+
+import {
+    backdropReducer,
+    infoReducer
+
+} from './ui'
 
 const tempReducer = (temp = 0, action) => {
     switch (action.type) {
@@ -33,6 +41,10 @@ const appReducer = combineReducers({
     roles: roleReducer,
     departments: departmentReducer,
     announcements: announcementReducer,
+    backdrop: backdropReducer,
+    info: infoReducer,
+    floors: floorReducer,
+    rooms: roomReducer
 });
 
 export default appReducer;

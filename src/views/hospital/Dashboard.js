@@ -6,7 +6,9 @@ import server from '../../axiosConfig';
 //action
 import {
     setDetailHospital,
-    setRoles, setDeps
+    setRoles, setDeps,
+    setFloor,
+    setRoom
 } from '../../actions/hospital/information';
 
 import About from '../../components/dashboard/About';
@@ -18,7 +20,7 @@ import Patient from "../../components/dashboard/Patient";
 import { DashboardContainer } from "../../style/container";
 
 
-const Dashboard = ({ hospital, setDetailHospital, setRoles, setDeps }) => {
+const Dashboard = ({ hospital, setDetailHospital, setRoles, setDeps, setFloor, setRoom }) => {
 
     const params = useParams();
 
@@ -48,6 +50,27 @@ const Dashboard = ({ hospital, setDetailHospital, setRoles, setDeps }) => {
         // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useEffect(() => {
+        server.get("/hospital/floor/all")
+            .then(floorRes => {
+                server.get("/hospital/room/all")
+                    .then(roomRes => {
+                        // console.log(floorRes);
+                        // console.log(roomRes);
+                        setFloor(floorRes.data.floors);
+                        setRoom(roomRes.data.rooms);
+                    })
+                    .catch(error => {
+                        console.log(error)
+
+                    })
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     useEffect(() => {
         setDetailHospital()
@@ -106,5 +129,7 @@ const mapStateToProps = state => ({ hospital: state.hospital })
 export default connect(mapStateToProps, {
     setDetailHospital,
     setRoles,
-    setDeps
+    setDeps,
+    setFloor,
+    setRoom
 })(Dashboard);

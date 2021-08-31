@@ -1,53 +1,53 @@
 import Joi from 'joi';
 
-const admittedNestedSchema = Joi.object().keys({
-    day: Joi.number()
-        .min(1)
-        .max(31)
-        .required(),
-    month: Joi.number()
-        .min(1)
-        .max(12)
-        .required(),
-    year: Joi.number()
-        .min(1950)
-        .max(2300)
-        .required(),
-    hour: Joi.number()
-        .min(0)
-        .max(23)
-        .required(),
-    minute: Joi.number()
-        .min(0)
-        .max(59)
-        .required()
+// const admittedNestedSchema = Joi.object().keys({
+//     day: Joi.number()
+//         .min(1)
+//         .max(31)
+//         .required(),
+//     month: Joi.number()
+//         .min(1)
+//         .max(12)
+//         .required(),
+//     year: Joi.number()
+//         .min(1950)
+//         .max(2300)
+//         .required(),
+//     hour: Joi.number()
+//         .min(0)
+//         .max(23)
+//         .required(),
+//     minute: Joi.number()
+//         .min(0)
+//         .max(59)
+//         .required()
 
-}).required();
+// }).required();
 
-const dischargedNestedSchema = Joi.object().keys({
-    day: Joi.number()
-        .min(1)
-        .max(31)
-        .required(),
-    month: Joi.number()
-        .min(1)
-        .max(12)
-        .required(),
-    year: Joi.number()
-        .min(1950)
-        .max(2300)
-        .required(),
-    hour: Joi.number()
-        .min(0)
-        .max(23)
-        .required(),
-    minute: Joi.number()
-        .min(0)
-        .max(59)
-        .required()
+// const dischargedNestedSchema = Joi.object().keys({
+//     day: Joi.number()
+//         .min(1)
+//         .max(31)
+//         .required(),
+//     month: Joi.number()
+//         .min(1)
+//         .max(12)
+//         .required(),
+//     year: Joi.number()
+//         .min(1950)
+//         .max(2300)
+//         .required(),
+//     hour: Joi.number()
+//         .min(0)
+//         .max(23)
+//         .required(),
+//     minute: Joi.number()
+//         .min(0)
+//         .max(59)
+//         .required()
 
-})
-    .optional().allow({})
+// })
+//     .optional().allow({})
 
 export const patientCreateSchema = Joi.object({
     firstName: Joi.string()
@@ -59,6 +59,7 @@ export const patientCreateSchema = Joi.object({
         .allow("")
         .optional()
         .max(30)
+        .trim()
     ,
     lastName: Joi.string()
         .max(30)
@@ -73,18 +74,31 @@ export const patientCreateSchema = Joi.object({
                 return helper.message("please entera a valid email")
 
             } else {
-                return true
+                return value
             }
         }),
+    phone: Joi.string()
+        .min(10)
+        .max(10)
+        .pattern(new RegExp('^[0-9]{1,10}$'))
+        .required(),
     department: Joi.string()
         .max(30)
         .required()
+        .custom((value, helper) => {
+            console.log(value)
+            if (value ==='no department created') {
+                return helper.message("please create a department from the dashboard")
+            } else {
+                return value
+            }
+        })
         .trim(),
     diagnosis: Joi.string()
         .max(100)
         .trim()
         .optional()
         .allow(''),
-    admitted: admittedNestedSchema,
-    discharged: dischargedNestedSchema
+    admitted: Joi.date().required(),
+    // discharged: Joi.date().optional().allow({})
 })

@@ -39,3 +39,17 @@ export const announcementReducer = (announcement = [], action) => {
         default: return announcement;
     }
 }
+
+export const floorReducer = (floors= [], action) => {
+    switch(action.type) {
+        case "SET_FLOOR": return [...action.payload];
+        default: return floors
+    }
+}
+
+export const roomReducer = (rooms= [], action) => {
+    switch(action.type) {
+        case "SET_ROOM": return [...action.payload];
+        default: return rooms
+    }
+}

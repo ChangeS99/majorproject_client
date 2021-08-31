@@ -23,7 +23,7 @@ const Search = ({ submitHandler, createHandler }) => {
                         onChange={handleInputChange}
                         type="text" />
                     <button onClick={(e) => submitHandler(e, search)}>
-                        <i class="fas fa-search"></i>
+                        <i className="fas fa-search"></i>
                     </button>
                 </div>
             </form>

@@ -38,10 +38,10 @@ const Home = ({ dashmode, setAnnouncement, emptyAnnouncement, announcements }) =
                     An apple a day keeps the doctor away.
                 </p>
             </div>
-            <div>
+            {/* <div>
                 <h2>Announcements: </h2>
                 <div>{JSON.stringify(announcements)}</div>
-            </div>
+            </div> */}
         </div>
     }
 
@@ -49,10 +49,10 @@ const Home = ({ dashmode, setAnnouncement, emptyAnnouncement, announcements }) =
     const EmployeeHome = () => {
         return <div>
             <div>Work hard play hard, employee</div>
-            <div>
+            {/* <div>
                 <h2>Announcements: </h2>
                 <div>{JSON.stringify(announcements)}</div>
-            </div>
+            </div> */}
         </div>
     }
 

@@ -2,10 +2,109 @@ import styled from 'styled-components';
 
 export const DashContentContainer = styled.div`
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-around;
     margin-top: 2rem;
     width: 100vw;
+
+    .about-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .floor-room-management {
+        display: flex;
+        flex-direction: column;
+        /* justify-content: space-around; */
+        border: 0.1rem solid black;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+
+        .header {
+            margin-left: 2rem;
+        }
+
+        .floor-room-main-cont {
+            display: flex;
+            flex-direction: row;
+        /* justify-content: space-around; */
+        }
+
+        .floor-item {
+            border: 0.1rem solid black;
+            flex: 3;
+            margin-left: 2rem;
+            margin-right: 2rem;
+            padding-left: 2rem;
+            padding-right: 2rem;
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+            height: 23rem;
+
+            .floor-item-content {
+                display: flex;
+                flex-direction: column;
+                border: 0.1rem solid blue;
+                height: 100%;
+
+                .item-input-cont {
+                    margin-top: auto;
+                }
+            }
+        }
+
+        .room-item {
+            border: 0.1rem solid black;
+            flex: 4;
+            margin-left: 2rem;
+            margin-right: 3rem;
+            padding-left: 2rem;
+            padding-right: 2rem;
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+            height: 23rem;
+
+            .room-item-content{
+                display: flex;
+                flex-direction: column;
+                border: 0.1rem solid blue;
+                height: 100%;
+
+                .item-input-cont {
+                    margin-top: auto;
+                }
+            }
+        }
+
+        .room-input-cont {
+            display: flex;
+        }
+
+        .item-input-cont {
+            .item-input-item{
+                label {
+                    font-size: 0.9rem;
+                }
+
+                input {
+                    
+                    padding: 0.2rem;
+                    border-radius: 0.5rem;
+                    outline:${props => props.theme.link.visited};
+                    border: 2px solid ${props => props.theme.link.active};
+
+                    :focus {
+                        border: 2px solid ${props => props.theme.link.visited};
+                    }
+                }
+            }
+
+            .item-input-btn-item {
+                /*  */
+            }
+        }
+    }
 
     .about-detail-container {
         display: flex;
@@ -96,8 +195,8 @@ export const DashContentContainer = styled.div`
                 }  
 
                 button:hover {
-                    background-color: ${props=> props.theme.background.nav};
-                    box-shadow: 0px 15px 30px ${props=> props.theme.background.nav};
+                    background-color: ${props => props.theme.background.nav};
+                    box-shadow: 0px 15px 30px ${props => props.theme.background.nav};
                     color: #fff;
                     transform: translateY(-2px);
                 }
@@ -139,6 +238,12 @@ export const ContentAdminCont = styled.div`
 
 export const ContentMainCont = styled.div`
     margin-top: 1.3rem;
+    width: 100%;
+    margin-bottom: 2rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `;
 
 export const ContentUtilityCont = styled.div`
@@ -154,8 +259,8 @@ export const ContentUtilityCont = styled.div`
         }
 
         button:hover {
-            background-color: ${props=> props.theme.background.nav};
-            box-shadow: 0px 7px 10px ${props=> props.theme.background.nav};
+            background-color: ${props => props.theme.background.nav};
+            box-shadow: 0px 7px 10px ${props => props.theme.background.nav};
             color: #fff;
             transform: translateY(-2px);
         }
@@ -196,8 +301,8 @@ export const SearchBarCont = styled.div`
         }
 
         button:hover {
-            background-color: ${props=> props.theme.background.nav};
-            box-shadow: 0px 15px 30px ${props=> props.theme.background.nav};
+            background-color: ${props => props.theme.background.nav};
+            box-shadow: 0px 15px 30px ${props => props.theme.background.nav};
             color: #fff;
             transform: translateY(-2px);
         }
