@@ -50,6 +50,22 @@ export const DashContentContainer = styled.div`
 
                 .item-input-cont {
                     margin-top: auto;
+                    height: 4rem;
+                    padding: 0.3rem;
+                    display: flex;
+                    /* height: 100%; */
+                    align-items: center;
+
+                    .item-input-item {
+                        label {
+                            font-size: 0.9rem;
+                            font-weight: 700;
+                        }
+                    }
+
+                    .item-input-btn-item {
+                        margin-left: auto;
+                    }
                 }
             }
         }
@@ -65,7 +81,7 @@ export const DashContentContainer = styled.div`
             padding-bottom: 2rem;
             height: 23rem;
 
-            .room-item-content{
+            .room-item-content {
                 display: flex;
                 flex-direction: column;
                 border: 0.1rem solid blue;
@@ -73,6 +89,22 @@ export const DashContentContainer = styled.div`
 
                 .item-input-cont {
                     margin-top: auto;
+                    height: 4rem;
+                    padding: 0.3rem;
+                    display: flex;
+                    /* height: 100%; */
+                    align-items: center;
+
+                    .item-input-item {
+                        label {
+                            font-size: 0.9rem;
+                            font-weight: 700;
+                        }
+                    }
+
+                    .item-input-btn-item {
+                        margin-left: auto;
+                    }
                 }
             }
         }

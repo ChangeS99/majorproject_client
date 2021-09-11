@@ -9,7 +9,7 @@ import {
     setRoom
 } from '../../../actions/hospital/information';
 
-const RoomItem = ({ data, setRoom }) => {
+const RoomItem = ({ data, setRoom, setRmList }) => {
 
     const [btn, setBtn] = useState({
         state: true,
@@ -30,6 +30,11 @@ const RoomItem = ({ data, setRoom }) => {
                 text: "deleted"
             });
             toast.success(response.data.message);
+            const filtered = response.data.rooms.filter(room => room.floor === data.floor);
+            setRmList({
+                list: [...filtered],
+                floor: data.floor
+            });
             setRoom(response.data.rooms);
         })
         .catch(error => {
@@ -45,12 +50,12 @@ const RoomItem = ({ data, setRoom }) => {
         })
     }   
 
-    return <div>
-        <div>
+    return <div className="room-item-container">
+        <div className="room-item-detail-container">
             <div>room name: {data.name}</div>
             <div>number: {data.number}, floor number: {data.floor}</div>
         </div>
-        <div>
+        <div className="room-item-btn-container">
             <button
             disabled={!btn}
             onClick={onDeleteHandler}

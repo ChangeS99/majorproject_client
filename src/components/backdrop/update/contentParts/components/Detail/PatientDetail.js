@@ -36,6 +36,10 @@ const PatientDetailUpdate = ({ info, marker, tab, setInfo, updateSearchResult, r
         if(detail.dob) {
             onChange(new Date(detail.dob))
         }
+
+        return () => {
+            setSearched(false);
+        }
     }, [info]);
 
     const onClickHandler = () => {
@@ -75,7 +79,7 @@ const PatientDetailUpdate = ({ info, marker, tab, setInfo, updateSearchResult, r
     const updateHandler = () => {
 
         let data = {dob};
-        if(Object.keys(address).length >= 1) {
+        if(searched) {
             data = {
                 dob,
                 address

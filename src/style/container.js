@@ -110,6 +110,27 @@ export const Footer = styled.footer`
     bottom: 0; */
     background-color: ${props => props.theme.background.nav};
     width: 100vw;
+    display: flex;
+    flex-direction: row;
+
+    .footer-github-logo {
+        height: 100%;
+        display: flex;
+        align-items: center; 
+        padding-left: 1rem;
+
+        a:visited {
+            color: black
+        }
+
+        a:hover {
+            color: ${props => props.theme.link.active}
+        }
+
+        i {
+            font-size: 2rem;
+        }
+    }
 `;
 
 export const ContentContainer = styled.div`

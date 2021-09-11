@@ -6,17 +6,23 @@ import {
 
 import RoomItem from './RoomItem';
 
-const RoomList = ({ rooms}) => {
+const RoomList = ({ rooms, setRmList }) => {
+    console.log(rooms);
     return <RoomListCont>
         {
-            rooms.length >= 1 ?
-                <div>
+            rooms.list.length >= 1 ?
+                <>
                     {
-                        rooms.map(room => <RoomItem data={room} key={room._id} />)
+                        rooms.list.map(room => <RoomItem data={room} key={room._id} setRmList={setRmList} />)
                     }
-                </div>
+                </>
                 :
-                <div>no room added yet.</div>
+                <div>{
+                    rooms.floor === -1 ?
+                        <div>No floor added yet.</div>
+                        :
+                        <div>No room added for floor {rooms.floor}</div>
+                }</div>
         }
     </RoomListCont>
 }

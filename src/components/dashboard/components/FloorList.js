@@ -7,17 +7,19 @@ import {
 
 import FloorItem from './FloorItem';
 
-const FloorList = ({ floors }) => {
+const FloorList = ({ floors, floorClick, selected, setRmList }) => {
 
 
     return <FloorListCont>
         {
             floors.length >= 1 ?
-                <div>
+                <>
                     {
-                        floors.map(floor => <FloorItem data={floor} key={floor._id} />)
+                        floors.map(floor => <FloorItem 
+                            setRmList={setRmList}
+                            selected={selected} data={floor} key={floor._id} floorClick={floorClick}/>)
                     }
-                </div>
+                </>
                 :
                 <div>no floor added yet.</div>
         }

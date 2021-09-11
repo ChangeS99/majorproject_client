@@ -63,12 +63,15 @@ const Navbar = ({ children, hospital, user }) => {
 
     const RenderProfileLinks = () => {
         return userExist && <div className="link-item-profile-container">
-            <NavLink
+            <div>
+                {user.username}
+            </div>
+            {/* <NavLink
                     to={`/profile`}
                     className={`link-items ${location.pathname.includes("profile") ? "active-link-items" : null}`}
                     activeClassName={"active-link-items"}>
                     {user.username}
-                </NavLink>
+                </NavLink> */}
         </div>
     }
 

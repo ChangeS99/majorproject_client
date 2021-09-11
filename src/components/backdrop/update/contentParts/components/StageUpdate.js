@@ -218,12 +218,8 @@ const StageUpdate = ({ info, floors, rooms, hospital, setInfo }) => {
 
                 </div>
             </div>
-            <div>
-                <button
-                    // onClick={updateHandler}
-                // disabled={btnState}
-                >update</button>
-            </div>
+            {/* 
+             */}
         </StageUpdateCont>
     )
 }

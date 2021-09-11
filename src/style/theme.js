@@ -5,6 +5,9 @@ export const theme = {
         secondary: "hsla(209, 35%, 30%, 1)",
         backdrop: {
             transparent: "hsla(0, 0%, 0%, 0.4)"
+        },
+        hover: {
+            light: "hsla(213, 100%, 75%, 1)"
         }
     },
     link: {

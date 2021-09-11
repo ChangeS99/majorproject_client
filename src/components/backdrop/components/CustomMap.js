@@ -97,6 +97,11 @@ const CustomMap = ({ hospital, placeMarker, resetMarker, mrk }) => {
             lng: lang,
             lat: lati
         })
+
+        return () => {
+            marker.current = null;
+            setMark({});
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -105,6 +110,10 @@ const CustomMap = ({ hospital, placeMarker, resetMarker, mrk }) => {
             placeMarker(mark);
         }
         if (!mark.lng) {
+            resetMarker();
+        }
+
+        return () => {
             resetMarker();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

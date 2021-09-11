@@ -25,7 +25,7 @@ export const LinkContainer = styled.div`
         flex-direction: column;
         justify-content: center;
         margin-left: auto;
-        margin-right: 0.9rem;
+        margin-right: 2rem;
         /* :hover {
             background-color : aliceblue;
             border: 1px solid aliceblue;

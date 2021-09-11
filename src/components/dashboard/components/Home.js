@@ -58,7 +58,7 @@ const Home = ({ dashmode, setAnnouncement, emptyAnnouncement, announcements }) =
 
 const ConditionalRendering = () => {
     switch (dashmode) {
-        case "admin": return <div>Admin sheeesssh</div>;
+        case "admin": return <div>With great Power comes great responsibility.</div>;
         case "employee": return <EmployeeHome />;
         case "patient": return <PatientHome />;
         default: return <div>Hello</div>

@@ -1,6 +1,6 @@
-import {useState} from 'react';
+import { useState } from 'react';
 import { connect } from 'react-redux';
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
 
 import server from '../../../axiosConfig';
 
@@ -10,13 +10,13 @@ import {
     setRoom
 } from '../../../actions/hospital/information';
 
-const FloorItem = ({ data, setFloor, setRoom }) => {
+const FloorItem = ({ data, setFloor, setRoom, floorClick, selected, setRmList }) => {
     const [btn, setBtn] = useState({
         state: true,
         text: "delete"
     });
     const onDeleteHandler = () => {
-        setBtn({state: false, text: "deleting"});
+        setBtn({ state: false, text: "deleting" });
         server.delete("/hospital/floor/delete", {
             data: {
                 floor: {
@@ -24,36 +24,49 @@ const FloorItem = ({ data, setFloor, setRoom }) => {
                 }
             }
         })
-        .then(response => {
-            setBtn({
-                state: true,
-                text: "deleted"
-            });
-            toast.success(response.data.message);
-            setFloor(response.data.floors);
-            setRoom(response.data.rooms);
-        })
-        .catch(error => {
-            setBtn({
-                state: true,
-                text: "delete"
-            });
-            if(error.response){
-                toast.error(error.response.data.error);
-            } else {
-                toast.error("Network error.")
-            }
-        })
-    }   
+            .then(response => {
+                setBtn({
+                    state: true,
+                    text: "deleted"
+                });
+                toast.success(response.data.message);
+                setFloor(response.data.floors);
+                setRoom(response.data.rooms);
+                if(selected.floor === data.number) {
+                    setRmList({
+                        list: [],
+                        floor: -1
+                    })
+                }
+            })
+            .catch(error => {
+                setBtn({
+                    state: true,
+                    text: "delete"
+                });
+                if (error.response) {
+                    toast.error(error.response.data.error);
+                } else {
+                    toast.error("Network error.")
+                }
+            })
+    }
 
-    return <div>
-        <div>
+    const onClickHandler = (number) => {
+        floorClick(number);
+    }
+
+    return <div
+        className={`floor-item-container ${selected.floor === data.number ? "active-floor": null}`}
+        onClick={() => onClickHandler(data.number)}
+    >
+        <div className="floor-item-detail-container">
             <div>floor</div>
             <div>number: {data.number}</div>
         </div>
-        <div>
+        <div className="floor-item-btn-container">
             <button
-            onClick={onDeleteHandler}>{btn.text}</button>
+                onClick={onDeleteHandler}>{btn.text}</button>
         </div>
     </div>
 }

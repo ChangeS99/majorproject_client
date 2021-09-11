@@ -4,7 +4,7 @@ import { Switch, Route, useHistory, useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 //toast
-import {ToastContainer} from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 // views
 import Auth from './auth/Auth';
@@ -112,7 +112,20 @@ const Navigator = ({ reSigninUser, user, setHospital, hospital }) => {
                         </Fragment>
                 }
             </MainContainer>
-            <Footer>Footer</Footer>
+            <Footer>
+                <div className="footer-github-logo">
+                    <a 
+                    title="github profile"
+                    href="https://github.com/ChangeS99" 
+                    target="_blank" rel="noreferrer">
+                        <i className="fab fa-github-square">
+                        </i>
+                    </a>
+                </div>
+                <div className="footer-email">
+                    <p>luyangpranim@gmail.com</p>
+                </div>
+            </Footer>
         </Body>
     </Fragment>
 }

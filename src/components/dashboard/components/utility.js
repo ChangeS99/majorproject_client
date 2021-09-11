@@ -1,5 +1,5 @@
 export const fields = {
-    global: "global",
+    everyone: "everyone",
     employee: "employee",
     patient: "patient"
 }

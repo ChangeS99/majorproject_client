@@ -51,7 +51,17 @@ const About = ({
         number: 0,
         name: "",
         floor: 0
-    })
+    });
+
+    const [rmList, setRmList] = useState({
+        list: [],
+        floor: -1
+    });
+
+    const [selected, setSelected] = useState({
+        floor: -1,
+        room: -1
+    });
 
     useEffect(() => {
         setDetailHospital()
@@ -89,10 +99,31 @@ const About = ({
             .then(floorRes => {
                 server.get("/hospital/room/all")
                     .then(roomRes => {
-                        console.log(floorRes);
-                        console.log(roomRes);
-                        setFloor(floorRes.data.floors);
-                        setRoom(roomRes.data.rooms);
+                        console.log("running");
+                        const flrs = floorRes.data.floors;
+                        const rms = roomRes.data.rooms;
+                        console.log(rms);
+                        setFloor(flrs);
+                        const filteredRooms = rms.filter(room => room.floor === floorRes.data.floors[0].number);
+                        setRoom(rms);
+                        if (!flrs.length >= 1) {
+                            setRmList({
+                                list: [],
+                                floor: -1
+                            });
+                        }
+
+                        if (flrs.length >= 1) {
+                            setRmList({
+                                list: [...filteredRooms],
+                                floor: flrs[0].number
+                            });
+                            setSelected({
+                                ...selected,
+                                floor: flrs[0].number
+                            })
+                        }
+
                     })
                     .catch(error => {
                         console.log(error)
@@ -163,11 +194,11 @@ const About = ({
         const value = e.target.value;
         if (type === "room" || type === "floor" || type === "room_floor") {
 
-            if(typeof Number(value) !== "number"){
+            if (typeof Number(value) !== "number") {
                 return
             }
 
-            if(Number(value) % 1 !== 0) {
+            if (Number(value) % 1 !== 0) {
                 return
             }
 
@@ -202,6 +233,8 @@ const About = ({
             toast.error("please enter a valid name.")
             return;
         }
+
+        console.log(selected);
         const makeRequest = (type) => {
             setFlrRmState(true);
 
@@ -213,9 +246,32 @@ const About = ({
                 toast.success(response.data.message);
 
                 if (type === "floor") {
-                    setFloor(response.data.floors)
+                    setFloor(response.data.floors);
+                    const flrs = response.data.floors;
+                    let filtered;
+                    if (rmList.floor === -1) {
+                        filtered = rooms.filter(room => room.floor === flrs[0].number);
+                        setSelected({
+                            ...selected,
+                            floor: response.data.floor.number
+                        })
+                    } else {
+                        filtered = rooms.filter(room => room.floor === rmList.floor);
+                    }
+
+                    setRmList({
+                        list: [...filtered],
+                        floor: flrs[0].number
+                    });
+
                 } else {
+
                     setRoom(response.data.rooms);
+                    const filtered = response.data.rooms.filter(room => room.floor === rmList.floor);
+                    setRmList({
+                        list: [...filtered],
+                        floor: rmList.floor
+                    })
                 }
             }).catch(error => {
                 setFlrRmState(false)
@@ -229,6 +285,18 @@ const About = ({
         }
 
         makeRequest(type);
+    }
+
+    const floorClickHandler = (number) => {
+        const filteredRooms = rooms.filter(room => room.floor === number);
+        setRmList({
+            list: [...filteredRooms],
+            floor: number
+        });
+        setSelected({
+            ...selected,
+            floor: number
+        })
     }
 
     return (
@@ -304,7 +372,13 @@ const About = ({
                 <div className="floor-room-main-cont">
                     <div className="floor-item">
                         <div className="floor-item-content">
-                            <FloorList floors={floors} />
+                            <FloorList
+                                floors={floors}
+                                floorClick={floorClickHandler}
+                                selected={selected}
+                                setSelected={setSelected}
+                                setRmList={setRmList}
+                            />
                             <div className="item-input-cont">
                                 <div className="item-input-item">
                                     <label>floor number: </label>
@@ -327,7 +401,12 @@ const About = ({
                     </div>
                     <div className="room-item">
                         <div className="room-item-content">
-                            <RoomList rooms={rooms} />
+                            <RoomList
+                                rooms={{ ...rmList }}
+                                setRmList={setRmList}
+                                selected={selected}
+                                setSelected={setSelected}
+                            />
                             <div className="item-input-cont">
                                 <div className="room-input-cont">
                                     <div className="item-input-item">
