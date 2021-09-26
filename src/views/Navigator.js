@@ -104,7 +104,10 @@ const Navigator = ({ reSigninUser, user, setHospital, hospital }) => {
 
                                 <Route path="/hospital/:hospitalName/dashboard/:dashmode/:crudmode" exact component={Dashboard} />
 
-                                <Route path="/" exact component={() => <h1>Home Page</h1>} />
+                                <Route path="/" exact component={() => <>
+                                <h1>Major Project</h1>
+                                <h3>By Sanjem Pranim Luyang</h3>
+                                </>} />
 
                                 <Route path='*' component={() => <h1>404 LMAO </h1>}>
                                 </Route>

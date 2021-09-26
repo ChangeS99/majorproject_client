@@ -58,7 +58,7 @@ const EmployeeHospitalUpdate = ({
 
 
     const updateHandler = () => {
-        server.put("/hospital/employee/update", {
+        server.patch("/hospital/employee/update", {
             data: {
                 timing
             },

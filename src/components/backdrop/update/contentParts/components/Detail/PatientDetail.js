@@ -86,7 +86,7 @@ const PatientDetailUpdate = ({ info, marker, tab, setInfo, updateSearchResult, r
             }
         }
 
-        server.put("/hospital/patient/update", {
+        server.patch("/hospital/patient/update", {
             data: {
                 ...data
             },

@@ -95,7 +95,7 @@ const EmployeeDetailUpdate = ({ info, departments, reduxRoles,  tab, result }) =
 
     const updateHandler = () => {
 
-        server.put("/hospital/employee/update", {
+        server.patch("/hospital/employee/update", {
             data: {
                 roles,
                 departments: deps

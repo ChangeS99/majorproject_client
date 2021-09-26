@@ -110,7 +110,7 @@ const ListItem = ({
     const AdminItem = () => {
         return <div>
             <div>name: {data.username}</div>
-            <div><button onClick={deleteHandler}><i class="far fa-trash-alt"></i></button></div>
+            {/* <div><button onClick={deleteHandler}><i class="far fa-trash-alt"></i></button></div> */}
         </div>
     }
 

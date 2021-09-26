@@ -63,7 +63,7 @@ const ContactUpdate = ({ info, updateSearchResult, setInfo, tab, result, backdro
             default: return;
         }
 
-        server.put(`/hospital/${backdrop.info.for}/update`, body)
+        server.patch(`/hospital/${backdrop.info.for}/update`, body)
             .then(response => {
                 console.log(response.data);
                 updateSearchResult(result, response.data.raw);

@@ -168,6 +168,21 @@ const CreateFormEmployee = ({ hospital, setDetailHospital, departments, roles })
 
     const submitHandler = (e) => {
         e.preventDefault()
+
+        console.log({
+            firstName: name.firstName,
+            middleName: name.middleName,
+            lastName: name.lastName,
+            email: detail.email,
+            role: detail.role,
+            department: detail.department,
+            joined,
+            timing: {
+                arrival,
+                leaving
+            }
+        })
+
         const isValidated = employeeCreateValidator({
             firstName: name.firstName,
             middleName: name.middleName,

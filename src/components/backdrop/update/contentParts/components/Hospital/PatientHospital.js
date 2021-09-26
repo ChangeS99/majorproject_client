@@ -68,7 +68,7 @@ const PatientHospitalUpdate = ({
     }
 
     const updateHandler = () => {
-        server.put("/hospital/patient/update", {
+        server.patch("/hospital/patient/update", {
             data: {
                 departments: deps
             },

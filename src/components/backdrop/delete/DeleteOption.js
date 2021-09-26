@@ -17,14 +17,13 @@ const DeleteOption = ({ removeItemSearchResult, setBackdrop, backdrop, info, res
                 }
             }).then(response => {
                 toast.success(response.data.message);
-                removeItemSearchResult(result, {_id: info.detail._id});
+                removeItemSearchResult(result, { _id: info.detail._id });
                 setInfo({});
-                setBackdrop({
-                    show: false,
-                    info: {
+                setBackdrop(
+                    false,
+                    {
                         for: "none"
-                    }
-                });
+                    });
             }).catch(error => {
                 if (error.response) {
                     toast.error(error.response.data.error);

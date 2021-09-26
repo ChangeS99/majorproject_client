@@ -35,6 +35,9 @@ const DateUpdate = ({ info, updateSearchResult, setInfo, tab, result }) => {
             // console.log(dates);
             setDischarged(new Date());
             // console.log("after update: ", dates);
+        } else {
+            setDischarged(new Date(d.discharged));
+            setShowDis(!showDis);
         }
         // console.log(dates);
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -48,7 +51,7 @@ const DateUpdate = ({ info, updateSearchResult, setInfo, tab, result }) => {
             return;
         }
 
-        server.put("/hospital/patient/update", {
+        server.patch("/hospital/patient/update", {
             data: {
                 admitted,
                 discharged
@@ -56,7 +59,7 @@ const DateUpdate = ({ info, updateSearchResult, setInfo, tab, result }) => {
             patientId: info.detail._id,
             tab
         }).then(response => {
-            console.log(response.data);
+            // console.log(response.data);
             updateSearchResult(result, response.data.raw);
             setInfo("patient", response.data.patient);
             toast.success(response.data.message);

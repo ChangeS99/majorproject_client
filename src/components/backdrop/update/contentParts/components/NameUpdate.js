@@ -63,7 +63,7 @@ const NameUpdate = ({ info, tab, result, updateSearchResult, setInfo, backdrop }
             default: return;
         }
 
-        server.put(`/hospital/${backdrop.info.for}/update`, body).then(response => {
+        server.patch(`/hospital/${backdrop.info.for}/update`, body).then(response => {
             console.log(response.data);
             updateSearchResult(result, response.data.raw);
             setInfo(backdrop.info.for, response.data[backdrop.info.for]);
