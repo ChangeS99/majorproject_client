@@ -18,6 +18,12 @@ export const MainContainer = styled.div`
     /* width: 100vw; */
     height: 100vh;
     /* display: flex; */
+
+    .main-container-info {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 `;
 
 export const NavContainer = styled.nav`
@@ -118,6 +124,7 @@ export const Footer = styled.footer`
         display: flex;
         align-items: center; 
         padding-left: 1rem;
+        margin-right: 0.3rem;
 
         a:visited {
             color: black

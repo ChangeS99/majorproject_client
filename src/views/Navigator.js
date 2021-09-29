@@ -105,8 +105,12 @@ const Navigator = ({ reSigninUser, user, setHospital, hospital }) => {
                                 <Route path="/hospital/:hospitalName/dashboard/:dashmode/:crudmode" exact component={Dashboard} />
 
                                 <Route path="/" exact component={() => <>
-                                <h1>Major Project</h1>
-                                <h3>By Sanjem Pranim Luyang</h3>
+                                    <div className="main-container-info">
+                                        <div>
+                                            <h1>Major Project</h1>
+                                            <h3>By Sanjem Pranim Luyang</h3>
+                                        </div>
+                                    </div>
                                 </>} />
 
                                 <Route path='*' component={() => <h1>404 LMAO </h1>}>
@@ -117,10 +121,10 @@ const Navigator = ({ reSigninUser, user, setHospital, hospital }) => {
             </MainContainer>
             <Footer>
                 <div className="footer-github-logo">
-                    <a 
-                    title="github profile"
-                    href="https://github.com/ChangeS99" 
-                    target="_blank" rel="noreferrer">
+                    <a
+                        title="github profile"
+                        href="https://github.com/ChangeS99"
+                        target="_blank" rel="noreferrer">
                         <i className="fab fa-github-square">
                         </i>
                     </a>

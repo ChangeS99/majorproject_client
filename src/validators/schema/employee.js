@@ -48,6 +48,8 @@ export const employeeCreateSchema = Joi.object({
         .required()
         .trim(),
     joined: Joi.date().required(),
-    arrival: timingNestedSchema,
-    leaving: timingNestedSchema
+    arrival: Joi.string().required(),
+    leaving: Joi.string().required()
+    // arrival: timingNestedSchema,
+    // leaving: timingNestedSchema
 })

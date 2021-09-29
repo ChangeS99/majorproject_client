@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 
 // import Calendar from 'react-calendar';
 import DateTimePicker from 'react-datetime-picker';
+import TimePicker from 'react-time-picker';
 
 
 import server from '../../../axiosConfig';
@@ -44,15 +45,20 @@ const CreateFormEmployee = ({ hospital, setDetailHospital, departments, roles })
         email: ""
     })
 
-    const [arrival, setArrival] = useState({
-        hour: 0,
-        minute: 0,
-    });
+    // const [arrival, setArrival] = useState({
+    //     hour: 0,
+    //     minute: 0,
+    // });
 
-    const [leaving, setLeaving] = useState({
-        hour: 0,
-        minute: 0,
-    })
+
+
+    // const [leaving, setLeaving] = useState({
+    //     hour: 0,
+    //     minute: 0,
+    // });
+
+    const [arrival, setArrival] = useState("00:00");
+    const [leaving, setLeaving] = useState("00:00");
 
     const nameOnChange = (e, type) => {
         const value = e.target.value;
@@ -328,7 +334,11 @@ const CreateFormEmployee = ({ hospital, setDetailHospital, departments, roles })
                         <div className="timing-time-arrival-container">
                             <div className="timing-time-arrival-item">
                                 {particularTypeError(errorObj, "arrival")}
-                                <div>
+                                <TimePicker
+                                    onChange={setArrival}
+                                    value={arrival}
+                                />
+                                {/* <div>
                                     <label>hour: </label>
                                     <input
                                         onChange={(e) => arrivalOnChange(e, "hour")}
@@ -346,7 +356,7 @@ const CreateFormEmployee = ({ hospital, setDetailHospital, departments, roles })
                                         type="number"
                                         min="0"
                                         max="59"></input>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                         <div>
@@ -355,7 +365,11 @@ const CreateFormEmployee = ({ hospital, setDetailHospital, departments, roles })
                         <div className="timing-time-leaving-container">
                             <div className="timing-time-leaving-item">
                                 {particularTypeError(errorObj, "leaving")}
-                                <div>
+                                <TimePicker
+                                    onChange={setLeaving}
+                                    value={leaving}
+                                />
+                                {/* <div>
                                     <label>hour: </label>
                                     <input
                                         onChange={(e) => leavingOnChange(e, "hour")}
@@ -368,7 +382,7 @@ const CreateFormEmployee = ({ hospital, setDetailHospital, departments, roles })
                                         onChange={(e) => leavingOnChange(e, "minute")}
                                         value={leaving.minute}
                                         type="number" min="0" max="59"></input>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>

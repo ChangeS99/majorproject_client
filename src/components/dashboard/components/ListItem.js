@@ -132,12 +132,12 @@ const ListItem = ({
                 <div className="item-id-container">
                     id: {data._id}
                 </div>
-                <div className="item-department-container">
+                {/* <div className="item-department-container">
                     department: {data.department}
-                </div>
-                <div className="item-department-container">
+                </div> */}
+                {/* <div className="item-department-container">
                     role: {data.role}
-                </div>
+                </div> */}
             </div>
             {/* <div className="item-btn-container">
                 <button onClick={deleteHandler}><i className="far fa-trash-alt"></i></button>

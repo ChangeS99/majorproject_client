@@ -45,8 +45,13 @@ export const DashContentContainer = styled.div`
             .floor-item-content {
                 display: flex;
                 flex-direction: column;
-                border: 0.1rem solid blue;
+                border: 0.1rem solid white;
+                background-color: white;
+                border-radius: 0.8rem;
+                box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+
                 height: 100%;
+                
 
                 .item-input-cont {
                     margin-top: auto;
@@ -84,7 +89,10 @@ export const DashContentContainer = styled.div`
             .room-item-content {
                 display: flex;
                 flex-direction: column;
-                border: 0.1rem solid blue;
+                border: 0.1rem solid white;
+                background-color: white;
+                border-radius: 0.8rem;
+                box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
                 height: 100%;
 
                 .item-input-cont {
